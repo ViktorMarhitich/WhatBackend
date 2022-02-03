@@ -108,7 +108,7 @@ stages{
     stage('Code Quality Check via SonarQube') {
         steps {
             sh "sudo ${sonarScanner} begin /k:${projectKey} /d:sonar.host.url=${sonarUrl} /d:sonar.login=${sonarLogin}"
-            sh "${dotnet} build /var/lib/jenkins/workspace/whatbackend_dev/CharlieBackend.sln"
+            sh "${dotnet} build"
             sh "sudo ${sonarScanner} end /d:sonar.login=${sonarLogin}"
         }
     }
