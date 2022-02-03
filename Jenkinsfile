@@ -1,7 +1,7 @@
 pipeline{
 agent any
 environment {
-    dotnet ="/usr/local/bin/dotnet"
+    dotnet ="/usr/share/dotnet"
     projectKey = "CharlieBackend"
     sonarUrl = "<http://62.171.182.32:9000>"
     sonarLogin = "15373bb1f498a29ede21cacd687bb105dec45d1f"
