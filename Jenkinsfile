@@ -23,6 +23,7 @@ stages{
     stage ('Fill database') {
         steps {
             sh(script:'''
+            mysql -uadmin -h mysqlinstance.cwkbjhl45gxq.eu-central-1.rds.amazonaws.com -padmin123 soft
             mysql -uadmin -h mysqlinstance.cwkbjhl45gxq.eu-central-1.rds.amazonaws.com -padmin123 soft < /var/lib/jenkins/workspace/whatbackend_dev/scripts/1_generate_database.sql
             mysql -uadmin -h mysqlinstance.cwkbjhl45gxq.eu-central-1.rds.amazonaws.com -padmin123 soft < /var/lib/jenkins/workspace/whatbackend_dev/scripts/2_final_script_with_data.sql
             mysql -uadmin -h mysqlinstance.cwkbjhl45gxq.eu-central-1.rds.amazonaws.com -padmin123 soft < /var/lib/jenkins/workspace/whatbackend_dev/scripts/3_changing_logic_for_homeworks.sql
