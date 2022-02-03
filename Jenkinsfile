@@ -106,12 +106,9 @@ stages{
     
     stage('Code Quality Check via SonarQube') {
         steps {
-            sh(script: 
-               '''
-               ${dotnet} sonarscanner begin /k:${projectKey} /d:sonar.host.url=${sonarUrl} /d:sonar.login=${sonarLogin}
-               ${dotnet} build /var/lib/jenkins/workspace/WhatBackend/CharlieBackend.sln
-               ${dotnet} sonarscanner end /d:sonar.login=${sonarLogin}
-               ''')
+            sh "${dotnet} sonarscanner begin /k:${projectKey} /d:sonar.host.url=${sonarUrl} /d:sonar.login=${sonarLogin}"
+            sh "${dotnet} build /var/lib/jenkins/workspace/WhatBackend/CharlieBackend.sln"
+            sh "${dotnet} sonarscanner end /d:sonar.login=${sonarLogin}"
         }
     }
   }
