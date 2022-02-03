@@ -22,22 +22,22 @@ stages{
   
     stage ('Fill database') {
         steps {
-            sh "mysql -uadmin -h mysqlinstance.cwkbjhl45gxq.eu-central-1.rds.amazonaws.com -padmin123 soft < /var/lib/jenkins/workspace/WhatBackend/scripts/1_generate_database.sql"
-            sh "mysql -uadmin -h mysqlinstance.cwkbjhl45gxq.eu-central-1.rds.amazonaws.com -padmin123 soft < /var/lib/jenkins/workspace/WhatBackend/scripts/2_final_script_with_data.sql"
-            sh "mysql -uadmin -h mysqlinstance.cwkbjhl45gxq.eu-central-1.rds.amazonaws.com -padmin123 soft < /var/lib/jenkins/workspace/WhatBackend/scripts/3_changing_logic_for_homeworks.sql"
-            sh "mysql -uadmin -h mysqlinstance.cwkbjhl45gxq.eu-central-1.rds.amazonaws.com -padmin123 soft < /var/lib/jenkins/workspace/WhatBackend/scripts/4_update_data_for_homeworks.sql"
-            sh "mysql -uadmin -h mysqlinstance.cwkbjhl45gxq.eu-central-1.rds.amazonaws.com -padmin123 soft < /var/lib/jenkins/workspace/WhatBackend/scripts/5_adding_history_of_homeworks.sql"
-            sh "mysql -uadmin -h mysqlinstance.cwkbjhl45gxq.eu-central-1.rds.amazonaws.com -padmin123 soft < /var/lib/jenkins/workspace/WhatBackend/scripts/6_add_avatars.sql"
-            sh "mysql -uadmin -h mysqlinstance.cwkbjhl45gxq.eu-central-1.rds.amazonaws.com -padmin123 soft < /var/lib/jenkins/workspace/WhatBackend/scripts/7_add_homework_attachments.sql"
-            sh "mysql -uadmin -h mysqlinstance.cwkbjhl45gxq.eu-central-1.rds.amazonaws.com -padmin123 soft < /var/lib/jenkins/workspace/WhatBackend/scripts/8_add_students_homeworks.sql"
-            sh "mysql -uadmin -h mysqlinstance.cwkbjhl45gxq.eu-central-1.rds.amazonaws.com -padmin123 soft < /var/lib/jenkins/workspace/WhatBackend/scripts/9_add_IsActive_for_studentgroups.sql"     
+            sh "mysql -uadmin -h mysqlinstance.cwkbjhl45gxq.eu-central-1.rds.amazonaws.com -padmin123 soft < /var/lib/jenkins/workspace/whatbackend_dev/scripts/1_generate_database.sql"
+            sh "mysql -uadmin -h mysqlinstance.cwkbjhl45gxq.eu-central-1.rds.amazonaws.com -padmin123 soft < /var/lib/jenkins/workspace/whatbackend_dev/scripts/2_final_script_with_data.sql"
+            sh "mysql -uadmin -h mysqlinstance.cwkbjhl45gxq.eu-central-1.rds.amazonaws.com -padmin123 soft < /var/lib/jenkins/workspace/whatbackend_dev/scripts/3_changing_logic_for_homeworks.sql"
+            sh "mysql -uadmin -h mysqlinstance.cwkbjhl45gxq.eu-central-1.rds.amazonaws.com -padmin123 soft < /var/lib/jenkins/workspace/whatbackend_dev/scripts/4_update_data_for_homeworks.sql"
+            sh "mysql -uadmin -h mysqlinstance.cwkbjhl45gxq.eu-central-1.rds.amazonaws.com -padmin123 soft < /var/lib/jenkins/workspace/whatbackend_dev/scripts/5_adding_history_of_homeworks.sql"
+            sh "mysql -uadmin -h mysqlinstance.cwkbjhl45gxq.eu-central-1.rds.amazonaws.com -padmin123 soft < /var/lib/jenkins/workspace/whatbackend_dev/scripts/6_add_avatars.sql"
+            sh "mysql -uadmin -h mysqlinstance.cwkbjhl45gxq.eu-central-1.rds.amazonaws.com -padmin123 soft < /var/lib/jenkins/workspace/whatbackend_dev/scripts/7_add_homework_attachments.sql"
+            sh "mysql -uadmin -h mysqlinstance.cwkbjhl45gxq.eu-central-1.rds.amazonaws.com -padmin123 soft < /var/lib/jenkins/workspace/whatbackend_dev/scripts/8_add_students_homeworks.sql"
+            sh "mysql -uadmin -h mysqlinstance.cwkbjhl45gxq.eu-central-1.rds.amazonaws.com -padmin123 soft < /var/lib/jenkins/workspace/whatbackend_dev/scripts/9_add_IsActive_for_studentgroups.sql"     
         }
     }
   
     stage ('Create .env files') {
         steps {
             sh '''
-            cat <<EOF > /var/lib/jenkins/workspace/CharlieBackend.Api/.env 
+            cat <<EOF > /var/lib/jenkins/workspace/whatbackend_dev/CharlieBackend.Api/.env 
             ConnectionStrings__DefaultConnection=server=mysqlinstance.cwkbjhl45gxq.eu-central-1.rds.amazonaws.com;port=3306;UserId=admin;Password=admin123;database=soft;Allow User Variables=true
             ConnectionStrings__RabbitMQ=host=kangaroo.rmq.cloudamqp.com;virtualHost=cfhrvrrt;username=cfhrvrrt;password=yYvcHUcFxTsHGm51j4GtpA3mFguNv065 
             ConnectionStrings__AzureBlobsAccessKey=DefaultEndpointsProtocol=https;AccountName=csb10032000fbf86473;AccountKey=3Naz0PXXBe0Lie7HV51jdZsSFCqThDMsqGWdENueI/d2OoV14j6o9Hh0lY1TvAtM8g0VIuPQLDDmEruu951NZA==;EndpointSuffix=core.windows.net
@@ -58,7 +58,7 @@ stages{
             EOF'''
           
             sh '''
-            cat <<EOF > /var/lib/jenkins/workspace/CharlieBackend.Panel/.env 
+            cat <<EOF > /var/lib/jenkins/workspace/whatbackend_dev/CharlieBackend.Panel/.env 
             #_____________For Admin Panel_________________
 
             # do not commit this file to VCS
@@ -75,30 +75,30 @@ stages{
 
     stage('Restore packages') {
         steps {
-            sh "dotnet restore /var/lib/jenkins/workspace/WhatBackend/CharlieBackend.sln"
+            sh "dotnet restore /var/lib/jenkins/workspace/whatbackend_dev/CharlieBackend.sln"
         } 
     }
 
     stage('Clean'){
         steps{
             
-            sh "dotnet clean /var/lib/jenkins/workspace/CharlieBackend.Api/CharlieBackend.Api.csproj"
-            sh "dotnet clean /var/lib/jenkins/workspace/CharlieBackend.Panel/CharlieBackend.Panel.csproj"
+            sh "dotnet clean /var/lib/jenkins/workspace/whatbackend_dev/CharlieBackend.Api/CharlieBackend.Api.csproj"
+            sh "dotnet clean /var/lib/jenkins/workspace/whatbackend_dev/CharlieBackend.Panel/CharlieBackend.Panel.csproj"
         }
     }
 
     stage('Build'){
         steps{
             
-            sh "dotnet build /var/lib/jenkins/workspace/WhatBackend/CharlieBackend.Api/CharlieBackend.Api.csproj --configuration Release"
-            sh "dotnet build /var/lib/jenkins/workspace/WhatBackend/CharlieBackend.Panel/CharlieBackend.Panel.csproj --configuration Release"
+            sh "dotnet build /var/lib/jenkins/workspace/whatbackend_dev/CharlieBackend.Api/CharlieBackend.Api.csproj --configuration Release"
+            sh "dotnet build /var/lib/jenkins/workspace/whatbackend_dev/CharlieBackend.Panel/CharlieBackend.Panel.csproj --configuration Release"
         }
     }
 
     stage('Test: Unit Test'){
         steps {
             
-            sh "dotnet test /var/lib/jenkins/workspace/WhatBackend/CharlieBackend.Api.UnitTes/CharlieBackend.Api.UnitTest.csproj"
+            sh "dotnet test /var/lib/jenkins/workspace/whatbackend_dev/CharlieBackend.Api.UnitTes/CharlieBackend.Api.UnitTest.csproj"
         }
     }
     
