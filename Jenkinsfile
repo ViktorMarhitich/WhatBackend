@@ -77,7 +77,7 @@ stages{
 
     stage('Restore packages') {
         steps {
-            sh(script: "/usr/share/dotnet/dotnet restore /var/lib/jenkins/workspace/whatbackend_dev/CharlieBackend.sln")
+            sh(script: "${dotnet} restore /var/lib/jenkins/workspace/whatbackend_dev/CharlieBackend.sln")
         } 
     }
 
