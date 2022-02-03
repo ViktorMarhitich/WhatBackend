@@ -22,15 +22,17 @@ stages{
   
     stage ('Fill database') {
         steps {
-            sh "mysql -uadmin -h mysqlinstance.cwkbjhl45gxq.eu-central-1.rds.amazonaws.com -padmin123 soft < /var/lib/jenkins/workspace/whatbackend_dev/scripts/1_generate_database.sql"
-            sh "mysql -uadmin -h mysqlinstance.cwkbjhl45gxq.eu-central-1.rds.amazonaws.com -padmin123 soft < /var/lib/jenkins/workspace/whatbackend_dev/scripts/2_final_script_with_data.sql"
-            sh "mysql -uadmin -h mysqlinstance.cwkbjhl45gxq.eu-central-1.rds.amazonaws.com -padmin123 soft < /var/lib/jenkins/workspace/whatbackend_dev/scripts/3_changing_logic_for_homeworks.sql"
-            sh "mysql -uadmin -h mysqlinstance.cwkbjhl45gxq.eu-central-1.rds.amazonaws.com -padmin123 soft < /var/lib/jenkins/workspace/whatbackend_dev/scripts/4_update_data_for_homeworks.sql"
-            sh "mysql -uadmin -h mysqlinstance.cwkbjhl45gxq.eu-central-1.rds.amazonaws.com -padmin123 soft < /var/lib/jenkins/workspace/whatbackend_dev/scripts/5_adding_history_of_homeworks.sql"
-            sh "mysql -uadmin -h mysqlinstance.cwkbjhl45gxq.eu-central-1.rds.amazonaws.com -padmin123 soft < /var/lib/jenkins/workspace/whatbackend_dev/scripts/6_add_avatars.sql"
-            sh "mysql -uadmin -h mysqlinstance.cwkbjhl45gxq.eu-central-1.rds.amazonaws.com -padmin123 soft < /var/lib/jenkins/workspace/whatbackend_dev/scripts/7_add_homework_attachments.sql"
-            sh "mysql -uadmin -h mysqlinstance.cwkbjhl45gxq.eu-central-1.rds.amazonaws.com -padmin123 soft < /var/lib/jenkins/workspace/whatbackend_dev/scripts/8_add_students_homeworks.sql"
-            sh "mysql -uadmin -h mysqlinstance.cwkbjhl45gxq.eu-central-1.rds.amazonaws.com -padmin123 soft < /var/lib/jenkins/workspace/whatbackend_dev/scripts/9_add_IsActive_for_studentgroups.sql"     
+            sh(script:'''
+            mysql -uadmin -h mysqlinstance.cwkbjhl45gxq.eu-central-1.rds.amazonaws.com -padmin123 soft < /var/lib/jenkins/workspace/whatbackend_dev/scripts/1_generate_database.sql
+            mysql -uadmin -h mysqlinstance.cwkbjhl45gxq.eu-central-1.rds.amazonaws.com -padmin123 soft < /var/lib/jenkins/workspace/whatbackend_dev/scripts/2_final_script_with_data.sql
+            mysql -uadmin -h mysqlinstance.cwkbjhl45gxq.eu-central-1.rds.amazonaws.com -padmin123 soft < /var/lib/jenkins/workspace/whatbackend_dev/scripts/3_changing_logic_for_homeworks.sql
+            mysql -uadmin -h mysqlinstance.cwkbjhl45gxq.eu-central-1.rds.amazonaws.com -padmin123 soft < /var/lib/jenkins/workspace/whatbackend_dev/scripts/4_update_data_for_homeworks.sql
+            mysql -uadmin -h mysqlinstance.cwkbjhl45gxq.eu-central-1.rds.amazonaws.com -padmin123 soft < /var/lib/jenkins/workspace/whatbackend_dev/scripts/5_adding_history_of_homeworks.sql
+            mysql -uadmin -h mysqlinstance.cwkbjhl45gxq.eu-central-1.rds.amazonaws.com -padmin123 soft < /var/lib/jenkins/workspace/whatbackend_dev/scripts/6_add_avatars.sql
+            mysql -uadmin -h mysqlinstance.cwkbjhl45gxq.eu-central-1.rds.amazonaws.com -padmin123 soft < /var/lib/jenkins/workspace/whatbackend_dev/scripts/7_add_homework_attachments.sql
+            mysql -uadmin -h mysqlinstance.cwkbjhl45gxq.eu-central-1.rds.amazonaws.com -padmin123 soft < /var/lib/jenkins/workspace/whatbackend_dev/scripts/8_add_students_homeworks.sql
+            mysql -uadmin -h mysqlinstance.cwkbjhl45gxq.eu-central-1.rds.amazonaws.com -padmin123 soft < /var/lib/jenkins/workspace/whatbackend_dev/scripts/9_add_IsActive_for_studentgroups.sql
+            ''')
         }
     }
   
