@@ -110,6 +110,6 @@ stages{
             sh "dotnet sonarscanner end /d:sonar.login=${sonarLogin}"
             
         }
-   }
+    }
+  }
 }
-
