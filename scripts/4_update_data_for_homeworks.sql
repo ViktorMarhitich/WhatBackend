@@ -2,6 +2,8 @@ USE `Soft`;
 
 LOCK TABLES `Soft`.`Marks` WRITE;
 
+SET foreign_key_checks = 0;
+
 INSERT INTO `Soft`.`Marks`
 (`Value`, `Comment`, `EvaluationDate`, `Type`, `EvaluatedBy`)
 VALUES
