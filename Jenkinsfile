@@ -5,6 +5,7 @@ environment {
     projectKey = "CharlieBackend"
     sonarUrl = "http://62.171.182.32:9000"
     sonarLogin = "15373bb1f498a29ede21cacd687bb105dec45d1f"
+    sonarScanner = "/home/ec2-user/.dotnet/tools/dotnet-sonarscanner"
 }
 
 stages{
@@ -106,9 +107,9 @@ stages{
     
     stage('Code Quality Check via SonarQube') {
         steps {
-            sh "${dotnet}-sonarscanner begin /k:${projectKey} /d:sonar.host.url=${sonarUrl} /d:sonar.login=${sonarLogin}"
+            sh "${sonarScanner} begin /k:${projectKey} /d:sonar.host.url=${sonarUrl} /d:sonar.login=${sonarLogin}"
             sh "${dotnet} build /var/lib/jenkins/workspace/WhatBackend/CharlieBackend.sln"
-            sh "${dotnet}-sonarscanner end /d:sonar.login=${sonarLogin}"
+            sh "${sonarScanner}-sonarscanner end /d:sonar.login=${sonarLogin}"
         }
     }
   }
