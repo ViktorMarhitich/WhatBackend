@@ -108,7 +108,6 @@ stages{
         steps {
             sh(script: 
                '''
-               ${dotnet} tool install --global dotnet-sonarscanner --version 5.4.1
                ${dotnet} sonarscanner begin /k:${projectKey} /d:sonar.host.url=${sonarUrl} /d:sonar.login=${sonarLogin}
                ${dotnet} build /var/lib/jenkins/workspace/WhatBackend/CharlieBackend.sln
                ${dotnet} sonarscanner end /d:sonar.login=${sonarLogin}
