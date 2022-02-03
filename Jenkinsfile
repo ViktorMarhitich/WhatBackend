@@ -53,7 +53,7 @@ stages{
 
             AuthOptions__KEY=mysupersecret_secretkey!123
 
-            # email notifier account credentials
+            # email notifier account credential
 
             CredentialsSendersSettings__email=WhatITAcademy@gmail.com
 
