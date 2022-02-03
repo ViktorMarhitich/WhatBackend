@@ -77,40 +77,42 @@ stages{
 
     stage('Restore packages') {
         steps {
-            sh "dotnet restore /var/lib/jenkins/workspace/whatbackend_dev/CharlieBackend.sln"
+            sh(script: "dotnet restore /var/lib/jenkins/workspace/whatbackend_dev/CharlieBackend.sln")
         } 
     }
 
     stage('Clean'){
         steps{
             
-            sh "dotnet clean /var/lib/jenkins/workspace/whatbackend_dev/CharlieBackend.Api/CharlieBackend.Api.csproj"
-            sh "dotnet clean /var/lib/jenkins/workspace/whatbackend_dev/CharlieBackend.Panel/CharlieBackend.Panel.csproj"
+            sh(script: "dotnet clean /var/lib/jenkins/workspace/whatbackend_dev/CharlieBackend.Api/CharlieBackend.Api.csproj")
+            sh(script: "dotnet clean /var/lib/jenkins/workspace/whatbackend_dev/CharlieBackend.Panel/CharlieBackend.Panel.csproj")
         }
     }
 
     stage('Build'){
         steps{
             
-            sh "dotnet build /var/lib/jenkins/workspace/whatbackend_dev/CharlieBackend.Api/CharlieBackend.Api.csproj --configuration Release"
-            sh "dotnet build /var/lib/jenkins/workspace/whatbackend_dev/CharlieBackend.Panel/CharlieBackend.Panel.csproj --configuration Release"
+            sh(script: "dotnet build /var/lib/jenkins/workspace/whatbackend_dev/CharlieBackend.Api/CharlieBackend.Api.csproj --configuration Release")
+            sh(script: "dotnet build /var/lib/jenkins/workspace/whatbackend_dev/CharlieBackend.Panel/CharlieBackend.Panel.csproj --configuration Release")
         }
     }
 
     stage('Test: Unit Test'){
         steps {
             
-            sh "dotnet test /var/lib/jenkins/workspace/whatbackend_dev/CharlieBackend.Api.UnitTes/CharlieBackend.Api.UnitTest.csproj"
+            sh(script: "dotnet test /var/lib/jenkins/workspace/whatbackend_dev/CharlieBackend.Api.UnitTes/CharlieBackend.Api.UnitTest.csproj")
         }
     }
     
     stage('Code Quality Check via SonarQube') {
         steps {
-            sh "dotnet tool install --global dotnet-sonarscanner --version 5.4.1"
-            sh "dotnet sonarscanner begin /k:${projectKey} /d:sonar.host.url=${sonarUrl} /d:sonar.login=${sonarLogin}"
-            sh "dotnet build /var/lib/jenkins/workspace/WhatBackend/CharlieBackend.sln"
-            sh "dotnet sonarscanner end /d:sonar.login=${sonarLogin}"
-            
+            sh(script: 
+               '''
+               dotnet tool install --global dotnet-sonarscanner --version 5.4.1
+               dotnet sonarscanner begin /k:${projectKey} /d:sonar.host.url=${sonarUrl} /d:sonar.login=${sonarLogin}
+               dotnet build /var/lib/jenkins/workspace/WhatBackend/CharlieBackend.sln
+               dotnet sonarscanner end /d:sonar.login=${sonarLogin}
+               ''')
         }
     }
   }
