@@ -3,7 +3,7 @@ agent any
 environment {
     dotnet ='./dotnet'
     projectKey = "CharlieBackend"
-    sonarUrl = "<http://62.171.182.32:9000">
+    sonarUrl = "<http://62.171.182.32:9000>"
     sonarLogin = "15373bb1f498a29ede21cacd687bb105dec45d1f"
 }
 
@@ -16,7 +16,7 @@ stages{
 
     stage ('Git Checkout') {
         steps {
-            git branch: 'dev', url: '<https://github.com/ViktorMarhitich/WhatBackend.git'>
+            git branch: 'dev', url: '<https://github.com/ViktorMarhitich/WhatBackend.git>'
         }
     }
   
