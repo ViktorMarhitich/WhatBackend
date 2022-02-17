@@ -143,7 +143,7 @@ stages {
             steps {
                 withAWS(credentials: 'aws_creds', region: 'eu-central-1') {
                     script {
-                        def rdbjson2 = sh(script: "/usr/local/bin/aws rds describe-db-instances \
+                        def rdbjson2 = sh(script: "/usr/bin/aws rds describe-db-instances \
                             --region eu-central-1 \
                             --db-instance-identifier mysqlinstance \
                             --query 'DBInstances[*].[DBInstanceIdentifier,Endpoint]'", returnStdout: true)
