@@ -202,7 +202,7 @@ stages {
             steps {
                 withAWS(credentials: 'aws_creds', region: 'eu-central-1') {
                     script {
-                        def containerTag = sh(script: "/usr/local/bin/aws ecr describe-images --repository-name 'what-backend-release-ecr' --query 'sort_by(imageDetails,& imagePushedAt)[-1].imageTags[0]' --output text", returnStdout: true).trim()
+                        def containerTag = sh(script: "/usr/bin/aws ecr describe-images --repository-name 'what-backend-release-ecr' --query 'sort_by(imageDetails,& imagePushedAt)[-1].imageTags[0]' --output text", returnStdout: true).trim()
                         // def containerTag = containerTag.trim()
                         sh "echo rdb Address"
                         sh "echo rdb Address = ${rdburl}"
@@ -218,7 +218,7 @@ stages {
                         
                         
                         sh '''
-                            /usr/local/bin/aws ecs register-task-definition \
+                            /usr/bin/aws ecs register-task-definition \
                                 --region ${AWS_ECR_REGION} \
                                 --family ${AWS_ECS_TASK_DEFINITION} \
                                 --execution-role-arn ${AWS_ECS_EXECUTION_ROL} \
@@ -228,8 +228,8 @@ stages {
                                 --memory ${AWS_ECS_MEMORY} \
                                 --container-definitions file://${AWS_ECS_TASK_DEFINITION_PATH} 
                         '''
-                        def taskRevision = sh(script: "/usr/local/bin/aws ecs describe-task-definition --task-definition ${AWS_ECS_TASK_DEFINITION} | egrep \"revision\" | tr \"/\" \" \" | awk '{print \$2}' | sed 's/\"\$//'", returnStdout: true)
-                        sh("/usr/local/bin/aws ecs update-service \
+                        def taskRevision = sh(script: "/usr/bin/aws ecs describe-task-definition --task-definition ${AWS_ECS_TASK_DEFINITION} | egrep \"revision\" | tr \"/\" \" \" | awk '{print \$2}' | sed 's/\"\$//'", returnStdout: true)
+                        sh("/usr/bin/aws ecs update-service \
                             --cluster ${AWS_ECS_CLUSTER} \
                             --service ${AWS_ECS_SERVICE} \
                             --task-definition ${AWS_ECS_TASK_DEFINITION}")
@@ -243,12 +243,12 @@ stages {
             steps {
                 withAWS(credentials: 'aws_creds', region: 'eu-central-1') {
                     script {
-                        def containerTag = sh(script: "/usr/local/bin/aws ecr describe-images --repository-name 'what-backend-release-panel-ecr' --query 'sort_by(imageDetails,& imagePushedAt)[-1].imageTags[0]' --output text", returnStdout: true).trim()
+                        def containerTag = sh(script: "/usr/bin/aws ecr describe-images --repository-name 'what-backend-release-panel-ecr' --query 'sort_by(imageDetails,& imagePushedAt)[-1].imageTags[0]' --output text", returnStdout: true).trim()
                         // def containerTag = containerTag.trim()
                         sh "sed -i 's/containerTag/${containerTag}/' ${AWS_ECS_PANEL_TASK_DEFINITION_PATH} "
                         sh "sed -i 's|url_api|${APIURL}|' ${AWS_ECS_PANEL_TASK_DEFINITION_PATH} "
                         sh '''
-                            /usr/local/bin/aws ecs register-task-definition \
+                            /usr/bin/aws ecs register-task-definition \
                                 --region ${AWS_ECR_REGION} \
                                 --family ${AWS_ECS_PANEL_TASK_DEFINITION} \
                                 --execution-role-arn ${AWS_ECS_EXECUTION_ROL} \
@@ -258,8 +258,8 @@ stages {
                                 --memory ${AWS_ECS_MEMORY} \
                                 --container-definitions file://${AWS_ECS_PANEL_TASK_DEFINITION_PATH} 
                         '''
-                        def taskRevision = sh(script: "/usr/local/bin/aws ecs describe-task-definition --task-definition ${AWS_ECS_TASK_DEFINITION} | egrep \"revision\" | tr \"/\" \" \" | awk '{print \$2}' | sed 's/\"\$//'", returnStdout: true)
-                        sh("/usr/local/bin/aws ecs update-service \
+                        def taskRevision = sh(script: "/usr/bin/aws ecs describe-task-definition --task-definition ${AWS_ECS_TASK_DEFINITION} | egrep \"revision\" | tr \"/\" \" \" | awk '{print \$2}' | sed 's/\"\$//'", returnStdout: true)
+                        sh("/usr/bin/aws ecs update-service \
                             --cluster ${AWS_ECS_PANEL_CLUSTER} \
                             --service ${AWS_ECS_PANEL_SERVICE} \
                             --task-definition ${AWS_ECS_PANEL_TASK_DEFINITION}")
