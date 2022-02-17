@@ -7,9 +7,7 @@ pipeline {
     	sonarUrl = "http://62.171.182.32:9000"
     	sonarLogin = "15373bb1f498a29ede21cacd687bb105dec45d1f"
     	sonarScanner = "/home/ec2-user/.dotnet/tools/dotnet-sonarscanner"
-	telegramToken = credentials('telegramToken')
-	telegram_bot_name = credentials('telegram_bot_name')
-	telegram_channel_id = credentials('telegram_channel_id')
+	
 	CDD_APPLICATION_VERSION_NAME = "${env.GIT_BRANCH}"
 	template_msg = "*Build* $JOB_NAME"
         AWS_ECR_REGION = "eu-central-1"
